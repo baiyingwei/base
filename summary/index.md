@@ -17,7 +17,6 @@
             jobLevel: 'senior'
         }
     }
-git
     var result = greeting.render(employee);
     console.log(result);
     实现输出 My name is xiaoming, age11, I am a designer;
