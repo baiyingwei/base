@@ -1,4 +1,5 @@
-     1.以下代码的输出结果？
+**1.以下代码的输出结果？**
+
         for (var i = 0; i < 5; i++){
           setTimeout(function(){
             console.log(i); //5个5
@@ -7,7 +8,8 @@
         console.log(i); //5
 
 
-    2.替greeting字符串实现一个render(Object)方法，将特定字符串替换为Object中对应的属性。例如：
+**2.替greeting字符串实现一个render(Object)方法，将特定字符串替换为Object中对应的属性。例如：**
+
     var greeting = 'My name is ${name}, age${age}, I am a ${job.jobName}';
     var employee = {
         name: 'xiaoming',
@@ -17,6 +19,7 @@
             jobLevel: 'senior'
         }
     }
+
     var result = greeting.render(employee);
     console.log(result);
     实现输出 My name is xiaoming, age11, I am a designer;
@@ -119,9 +122,9 @@
 
     9.描述网站网址流程
     DNS解析 -》 建立TCP连接 -》发送HTTP请求 -》响应请求 -》浏览器解析加载页面
-
-    参考：https://juejin.im/post/5a50320c6fb9a01cb912b64a
-    https://mp.weixin.qq.com/s/qMsf4DcMhn2cf0fXC-PLVA
+    参考：
+https://juejin.im/post/5a50320c6fb9a01cb912b64a
+https://mp.weixin.qq.com/s/qMsf4DcMhn2cf0fXC-PLVA
 
     10.数组去重实现方法
     const arr = [1, 2, 3, 4, 4, 5, 6, 6];
@@ -159,14 +162,19 @@
 
     13.性能优化 dns预解析 压缩 按需加载 首屏加载
 
-    性能优化：https://www.zhihu.com/question/21658448
-    dns预解析： DNS Prefetching 是让具有此属性的域名不需要用户点击链接就在后台解析，而域名解析和内容载入是串行的网络操作，所以这个方式能 减少用户的等待时间，提升用户体验 。
+    性能优化：
+https://www.zhihu.com/question/21658448
 
-    按需加载：https://www.cnblogs.com/mamimi/p/7646358.html
+
+    dns预解析：
+    DNS Prefetching 是让具有此属性的域名不需要用户点击链接就在后台解析，而域名解析和内容载入是串行的网络操作，所以这个方式能 减少用户的等待时间，提升用户体验 。
+
+    按需加载：
+https://www.cnblogs.com/mamimi/p/7646358.html
 
     14.排序算法
 
-    http://www.cnblogs.com/onepixel/articles/7674659.html
+http://www.cnblogs.com/onepixel/articles/7674659.html
 
     冒泡排序
 
