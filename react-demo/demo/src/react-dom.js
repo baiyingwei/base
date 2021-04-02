@@ -1,7 +1,21 @@
 import addEvent from './event';
 import { REACT_TEXT } from './constants';
+import { PureComponent } from './Component';
+
+let scheduleUpdate;
+
+const hookState = [];
+let hookIndex = 0;
 
 function render(vdom, container) {
+  mount(vdom, container);
+  scheduleUpdate = () => {
+    hookIndex = 0;
+    compareTwoVdom(container, vdom, vdom);
+  }
+}
+
+function mount(vdom, container) {
   const dom = createDOM(vdom);
   container.appendChild(dom);
   console.log('vdom', vdom)
@@ -30,7 +44,7 @@ function createDOM(vdom) {
   if (typeof children === 'string' || typeof children === 'number') {
     dom.textContent = children;
   } else if (typeof children === 'object' && props.children.type) {
-    render(children, dom);
+    mount(children, dom);
   } else if (Array.isArray(children)) {
     reconcileChildren(children, dom);
   } else {
@@ -58,8 +72,8 @@ function updateProps(dom, oldProps, newProps) {
 
 function reconcileChildren(childrenVDOM, parentDOM) {
   for (var i = 0; i < childrenVDOM.length; i++) {
-    if (childrenVDOM[i] !== null) {//?????
-      render(childrenVDOM[i], parentDOM);
+    if (childrenVDOM[i] !== null && childrenVDOM[i] !== undefined) {//?????
+      mount(childrenVDOM[i], parentDOM);
     }
   }
 }
@@ -69,6 +83,7 @@ function mountFunctionComponent(vdom) {
   let oldRenderVdom = functionComponent(props);
   vdom.oldRenderVdom = oldRenderVdom;
   const dom = createDOM(oldRenderVdom);
+  vdom.dom = dom;
   vdom.oldRenderVdom.dom = dom;
   return dom;
 }
@@ -137,6 +152,7 @@ function updateElement(oldVdom, newVdom) {
     currentDOM.textContent = newVdom.props.content;
   } else if (typeof oldVdom.type === 'string') {//真实dom
     let currentDOM = newVdom.dom = oldVdom.dom;
+    debugger
     updateProps(currentDOM, oldVdom.props, newVdom.props);
     updateChildren(currentDOM, oldVdom.props.children, newVdom.props.children);
   } else if (typeof oldVdom.type === 'function') {
@@ -174,20 +190,31 @@ function updateChildren(parentDOM, oldVChildren, newVChildren) {
   }
 }
 
-const hookState = [];
-let hookIndex = 0;
-function useState() {
-  let state = hookState[hookIndex];
+function useState(initState) {
+  hookState[hookIndex] = hookState[hookIndex] || initState;
+  let currentIndex = hookIndex;
   function setState(newState) {
-    hookIndex = 0;
-    hookState[hookIndex] = newState;
+    if (typeof newState === 'function') {
+      newState = newState(hookState[currentIndex]);
+    }
+    hookState[currentIndex] = newState;
+    scheduleUpdate();
   }
-  return [state, setState]
+  return [hookState[hookIndex++], setState]
+}
+
+function memo(FunctionComponent) {
+  return class extends PureComponent {
+    render() {
+      return FunctionComponent(this.props);
+    }
+  }
 }
 
 const ReactDOM = { render };
 export {
   createDOM,
-  useState
+  useState,
+  memo
 }
 export default ReactDOM;

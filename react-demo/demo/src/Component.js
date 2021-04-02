@@ -87,6 +87,21 @@ class Component {
 
   }
 }
+class PureComponent extends Component {
+  debugger
+  shouldComponentUpdate(nextProps, nextState) {
+    return !shallowEqual(this.props, nextProps) && !shallowEqual(this.state, nextState)
+  }
+}
+
+function shallowEqual(obj1, obj2) {
+  if (obj1 === obj2) {
+    return true;
+  }
+  if (typeof obj1 !== 'object' || obj1 === null || typeof obj2 !== 'object' || obj2 === null) {
+    return false;
+  }
+}
 
 function updateClassComponent(classInstance, newVDom) {
   let oldDom = classInstance.dom;
@@ -95,4 +110,7 @@ function updateClassComponent(classInstance, newVDom) {
   classInstance.dom = newDom;
 }
 
-export default Component;
+export {
+  Component,
+  PureComponent
+};
