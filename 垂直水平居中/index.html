@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+
+    }
+
+    .container {
+      height: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container:after {
+      content: '';
+      flex-grow: 0.5;
+      /* display: inline-block;
+      height: 100%;
+      vertical-align: middle; */
+    }
+
+    .box {
+      /* display: inline-block;
+      vertical-align: middle; */
+      width: 200px;
+      height: 200px;
+      background: red;
+      line-height: 200px;
+    }
+
+    .box div{
+      line-height: 1;
+      display: inline-block;
+    }
+
+
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="box">
+      <div>5、通过隐藏节点实现CSS垂直居中。再通过translateY即可定位到垂直居中的位置。CSS垂直居中的8种方法</div>
+    </div>
+  </div>
+
+</body>
+
+</html>

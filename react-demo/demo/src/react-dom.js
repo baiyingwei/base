@@ -4,6 +4,7 @@ import { REACT_TEXT } from './constants';
 function render(vdom, container) {
   const dom = createDOM(vdom);
   container.appendChild(dom);
+  console.log('vdom', vdom)
 }
 
 function createDOM(vdom) {
@@ -65,9 +66,11 @@ function reconcileChildren(childrenVDOM, parentDOM) {
 
 function mountFunctionComponent(vdom) {
   const { type: functionComponent, props } = vdom;
-  vdom = functionComponent(props);
-  vdom.oldRenderVdom = vdom;
-  return createDOM(vdom);
+  let oldRenderVdom = functionComponent(props);
+  vdom.oldRenderVdom = oldRenderVdom;
+  const dom = createDOM(oldRenderVdom);
+  vdom.oldRenderVdom.dom = dom;
+  return dom;
 }
 
 function mountClassComponent(vdom) {
@@ -118,7 +121,6 @@ export function compareTwoVdom(parentDOM, oldVdom, newVdom, nextDOM) {
 }
 
 function findDOM(vdom) {
-  debugger
   let { type } = vdom;
   let dom;
   if (typeof type === 'function') {
@@ -141,7 +143,7 @@ function updateElement(oldVdom, newVdom) {
     if (oldVdom.type.isReactComponent) {
       updateClassComponent(oldVdom, newVdom);
     } else {
-      // updateFunctionComponent(oldVdom, newVdom);
+      updateFunctionComponent(oldVdom, newVdom);
     }
   }
 }
@@ -155,6 +157,14 @@ function updateClassComponent(oldVdom, newVdom) {
   classInstance.updater.emitUpdate(newVdom.props);
 }
 
+function updateFunctionComponent(oldVdom, newVdom) {
+  let parentNode = findDOM(oldVdom).parentNode;
+  let { type, props } = newVdom;
+  let newRenderVdom = type(props);
+  newVdom.oldRenderVdom = newRenderVdom;
+  compareTwoVdom(parentNode, oldVdom.oldRenderVdom, newRenderVdom);
+}
+
 function updateChildren(parentDOM, oldVChildren, newVChildren) {
   oldVChildren = Array.isArray(oldVChildren) ? oldVChildren : [oldVChildren];
   newVChildren = Array.isArray(newVChildren) ? newVChildren : [newVChildren];
@@ -164,8 +174,20 @@ function updateChildren(parentDOM, oldVChildren, newVChildren) {
   }
 }
 
+const hookState = [];
+let hookIndex = 0;
+function useState() {
+  let state = hookState[hookIndex];
+  function setState(newState) {
+    hookIndex = 0;
+    hookState[hookIndex] = newState;
+  }
+  return [state, setState]
+}
+
 const ReactDOM = { render };
 export {
-  createDOM
+  createDOM,
+  useState
 }
 export default ReactDOM;

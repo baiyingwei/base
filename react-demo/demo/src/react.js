@@ -1,5 +1,6 @@
 import Component from './Component';
 import { wrapToVdom } from './utils';
+import { useState } from './react-dom';
 
 function createElement(type, config, children) {
   const props = { ...config };
@@ -14,6 +15,6 @@ function createElement(type, config, children) {
   }
 }
 
-const React = { createElement, Component };
+const React = { createElement, Component, useState };
 
 export default React;

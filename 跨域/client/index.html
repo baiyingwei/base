@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+ 
+
+</head>
+
+<body>
+  <div>123</div>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    // const script = document.createElement('script');
+    // script.src = 'http://localhost:3000/index?callback=fnCall';
+    // function fnCall(res) {
+    //   console.log('res', res)
+    // }
+    // document.body.appendChild(script);
+    // var child = window.open("http://localhost:8081/");
+
+    // setTimeout(function () {
+    //   child.postMessage('post消息', 'http://localhost:8081/')
+    // }, 3000);
+    // const options = {
+    //   method: 'get',
+    //   headers: {
+    //     'Authorization': 'ssss'
+    //   },
+    //   withCredentials: true,
+    //   // data: qs.stringify(data),
+    //   url: 'http://localhost:3000/index',
+    // };
+    // axios(options).then(res => {
+    //   console.log(res)
+    // })
+
+    let socket = new WebSocket('ws://localhost:3000');
+    console.log('socket', socket.readyState)
+    socket.onopen = function () {
+      console.log('onopen', socket.readyState)
+      socket.send('我爱你');//向服务器发送数据
+    }
+    socket.onmessage = function (e) {
+      console.log('onmessage', socket.readyState)
+      console.log(e.data);//接收服务器返回的数据
+    }
+  </script>
+</body>
+
+</html>

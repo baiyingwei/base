@@ -69,6 +69,7 @@ class ClassComponent extends React.Component {
         {this.state.count}
         <button onClick={this.handleClick}><span>按钮</span></button>
         <ChildClassComponent count={this.state.count} />
+        <ChildFunctionComponent count={this.state.count} />
       </div>
     )
   }
@@ -113,9 +114,15 @@ class ChildClassComponent extends React.Component {
   }
 }
 
+function ChildFunctionComponent(props) {
+  return (
+    <div>函数子组件{props.count}</div>
+  )
+}
+
 // console.log(JSON.stringify(element1, null, 2))
 ReactDOM.render(
-  <ClassComponent/>,
+  <ClassComponent />,
   document.getElementById('root')
 );
 

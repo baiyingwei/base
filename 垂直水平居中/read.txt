@@ -1,0 +1,45 @@
+元素居中
+方法一：
+position: relative;
+top: 50%;
+transform: translateY(-50%);
+margin: 0 auto;
+
+方法二：
+display: flex;
+align-items: center;
+justify-content: center;
+
+方法三：
+父元素： {
+  text-align: center'
+}
+父元素：after{
+  vertical-align: center;
+  display: inline-block;
+  content: ''；
+  height: 100%:
+}
+子元素：{
+   vertical-align: center;
+    display: inline-block;
+}
+
+方法四：
+grid布局
+父元素:{
+  display: grid;
+  grid-template-rows: 1fr auto 1fr;
+  grid-template-columns: 1fr auto 1fr;
+  geif-template-areas: '. . .
+  . a .
+  . . .
+  '
+}
+子元素：{
+  grid-area: a;
+}
+
+文本居中
+多行：
+align-coutent: center 添加伪类元素，模仿成多行
