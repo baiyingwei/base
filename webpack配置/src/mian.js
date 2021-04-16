@@ -1,2 +1,2 @@
-import React from 'react';
-conosle.log(1111111111)
+export default 123;
+export const name = 123;

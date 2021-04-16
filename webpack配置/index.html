@@ -5,8 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <style>
+    
+  </style>
 </head>
 <body>
-  
+  <div id="app"></div>
+  <script>
+    const docE = document.documentElement;
+    function setSize(){
+      docE.style.fontSize = docE.clientWidth / 10 + 'px';
+    }
+    setSize();
+  </script>
 </body>
 </html>

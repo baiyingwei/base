@@ -2,11 +2,16 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const Webpack = require('webpack');
-const FirstPlugin = require('./webpack-firstPlugin.js');
+// const FirstPlugin = require('./webpack-firstPlugin.js');
 module.exports = {
+  // entry: {
+  //   page1: './src/index.js',
+  //   page2: './src/mian.js'
+  // },
   entry: './src/index.js',
   output: {
-    filename: 'webpack.[hash].js',
+    filename: '[name].[hash:5].js',
+    chunkFilename: 'chunk.[hash:5].js',
     path: path.resolve(__dirname, 'build')
   },
   module: {
@@ -14,9 +19,6 @@ module.exports = {
       {
         test: /\.js$/,
         use: [
-          {
-            loader: path.resolve(__dirname, 'drop-console.js')
-          },
           {
             loader: 'babel-loader',
             options: {
@@ -28,7 +30,12 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        use: ['style-loader', 'css-loader', {
+          loader: 'px2rem-loader',
+          options: {
+            remUnit: 75
+          }
+        }]
       },
       {
         test: /\.less$/,
@@ -66,10 +73,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "[name].[hash].css",
       chunkFilename: "[id].css",
-    }),
-    new Webpack.DllReferencePlugin({
-      manifest: path.resolve(__dirname, 'build/vendors-manifest.json')
-    }),
-    new FirstPlugin()
+    })
   ]
 }

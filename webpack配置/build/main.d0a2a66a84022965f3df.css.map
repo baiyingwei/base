@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack:///./src/index.less"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA;AACA","file":"main.d0a2a66a84022965f3df.css","sourcesContent":["body {\n  background: #ccc;\n}\n.flex-box {\n  display: -webkit-box;\n  display: flex;\n}\n"],"sourceRoot":""}

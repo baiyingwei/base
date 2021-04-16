@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./src/mian.js"],"names":["name"],"mappings":";;;;;;;;;;AAAA;AAAA;AAAe,kEAAf;AACO,IAAMA,IAAI,GAAG,GAAb,C","file":"chunk.ce9e9.js","sourcesContent":["export default 123;\r\nexport const name = 123;"],"sourceRoot":""}

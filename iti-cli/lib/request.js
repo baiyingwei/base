@@ -6,12 +6,11 @@ axios.interceptors.response.use(res => {
 });
 
 async function fetchRepoList() {
-
-  return axios.get('https://api.github.com/orgs/zhu-cli/repos');
+  return axios.get('https://api.github.com/orgs/iti-temp/repos');
 }
 
 async function fetchTagList(repo) {
-  return axios.get(`https://api.github.com/repos/zhu-cli/${repo}/tags`);
+  return axios.get(`https://api.github.com/repos/iti-temp/${repo}/tags`);
 }
 
 module.exports = {
