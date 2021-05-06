@@ -1,25 +1,53 @@
-const core = require('@babel/core');
-const types = require('@babel/types');
+const babel = require('@babel/core');
+const type = require('@babel/types');
+const template = require('@babel/template');
+const { VisitorKeys } = require('estraverse');
+
+
 const sourceCode = `
   const a = () => {
-    return 1;
-  }
+    console.log(this);
+    return 123
+  };
 `;
 
-//每个插件有自己的访问器, 对象里右节点，属性就是对象的类型
-const BabelPluginArrowTranverse = {
-  visitor: {
+const TransformArrow = {
+  visitor:{
     ArrowFunctionExpression(nodepath){
-      let node = nodepath.node;
+      const node = nodepath.node;
       if(node.type === 'ArrowFunctionExpression'){
-        node.type = 'FunctionExpression';
+        const thisBinding = hoistFunctionEnvironment(nodepath);
+        node.type = 'FunctionExpression'
       }
     }
   }
 }
 
-let targetCode = core.transform(sourceCode, {
-  plugins: [BabelPluginArrowTranverse]
-}).code;
+function hoistFunctionEnvironment(nodepath){
+  //获取this对象的节点
+  const thisEnvFn = nodepath.findParent(p=> {
+    return (p.isFunction() && !p.isArrowFunctionExpression()) || p.isProgram();
+  });
+  // console.log('thisEnvFn', thisEnvFn)
+  //获取作用域
+  const thisPaths = getScropeInformation(nodepath);
+  if(thisPaths.length){
+    console.log(thisEnvFn.scrop)
+  }
+}
 
-console.log(targetCode)
+function getScropeInformation(nodepath){
+  let thisPaths = [];
+  nodepath.traverse({
+    ThisExpression(thispath){
+      thisPaths.push(thispath)
+    }
+  })
+  return thisPaths;
+}
+
+const ast = babel.transform(sourceCode, {
+  plugins: [TransformArrow]
+})
+
+// console.log(ast.code)

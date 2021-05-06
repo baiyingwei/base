@@ -25,3 +25,14 @@ function add(a) {
 }
 console.log(add(1)(2)(3).getA()); //6
 // console.log(add(1)(2)(3)(4)); //10
+
+const q = [1, 2, 3, 4].reduce((sum, cur, index, arr) => {
+  // console.log(sum, cur, index, arr)
+  return sum + cur
+}, 0)
+
+console.log(q)
+
+
+
+
